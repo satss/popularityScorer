@@ -1,4 +1,4 @@
-package integrationtest.testConfig;
+package com.example.popularityScorer.testConfig;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

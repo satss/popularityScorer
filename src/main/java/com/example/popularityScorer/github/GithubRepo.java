@@ -53,8 +53,8 @@ public class GithubRepo {
     LocalDateTime createdAt = LocalDateTime.now();
 
     Boolean isSame(GithubRepo newRepo) {
-        return !Objects.equals(this.forks, newRepo.forks) || !Objects.equals(this.stars, newRepo.stars)
-                || this.repoLastUpdatedAt != newRepo.repoLastUpdatedAt;
+        return Objects.equals(this.forks, newRepo.forks) && Objects.equals(this.stars, newRepo.stars)
+                && this.repoLastUpdatedAt == newRepo.repoLastUpdatedAt;
     }
 
     GithubRepo merge(GithubRepo newRepo) {

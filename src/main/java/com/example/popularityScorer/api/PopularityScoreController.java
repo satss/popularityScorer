@@ -1,6 +1,9 @@
 package com.example.popularityScorer.api;
 
 
+import com.example.popularityScorer.api.model.ApiPopularRepoV1;
+import com.example.popularityScorer.api.model.PaginatedPopularRepo;
+import com.example.popularityScorer.api.model.PopularRepoRequest;
 import com.example.popularityScorer.github.GithubRepo;
 import com.example.popularityScorer.github.GithubRepoService;
 import org.springframework.data.domain.Page;
@@ -11,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/popularRepos")
+@RequestMapping("/api/v1/repos")
 public class PopularityScoreController {
 
     private final GithubRepoService githubRepoService;
@@ -28,8 +31,7 @@ public class PopularityScoreController {
             @RequestParam(name = "language", required = false) String language
     ) {
         Pageable pageable = PageRequest.of(page, size, (Sort.by(sortBy).descending()));
-        return toPaginatedApi(githubRepoService.findPopularScore(language, pageable));
-
+        return toPaginatedApi(githubRepoService.getAllPopularRepos(language, pageable));
     }
 
     @PutMapping()
@@ -37,12 +39,11 @@ public class PopularityScoreController {
             @RequestBody PopularRepoRequest popularRepoRequest
     ) {
         githubRepoService.assignScore(popularRepoRequest.githubId(), popularRepoRequest.score());
-
     }
 
     private PaginatedPopularRepo toPaginatedApi(Page<GithubRepo> githubRepos) {
         var popularRepos = githubRepos.getContent().stream().map(repo ->
-                new ApiPopularRepo(repo.getGithubId(),
+                new ApiPopularRepoV1(repo.getGithubId(),
                         repo.getName(), repo.getLanguage().name(), repo.getPopularityScore(),
                         repo.getRepoCreatedAt())).toList();
         return PaginatedPopularRepo.builder().paginatedPopularRepo(popularRepos)

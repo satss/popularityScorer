@@ -1,8 +1,5 @@
-package com.example.popularityScorer.scoreDeterminer;
+package com.example.popularityScorer.github;
 
-import com.example.popularityScorer.github.GithubRepoRepository;
-import com.example.popularityScorer.github.GithubRepo;
-import com.example.popularityScorer.github.Language;
 import com.example.popularityScorer.github.score.PopularityScoreCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

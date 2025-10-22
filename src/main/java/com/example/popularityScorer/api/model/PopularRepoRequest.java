@@ -1,4 +1,4 @@
-package com.example.popularityScorer.api;
+package com.example.popularityScorer.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

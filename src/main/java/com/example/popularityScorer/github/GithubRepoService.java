@@ -5,11 +5,7 @@ import com.example.popularityScorer.client.GithubSearchResponse;
 import com.example.popularityScorer.github.score.PopularityScoreCalculator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,16 +16,12 @@ public class GithubRepoService {
 
     private final PopularityScoreCalculator popularityScoreCalc;
 
-    private final MongoTemplate mongoTemplate;
-
     public GithubRepoService(GithubRepoRepository githubRepoRepository,
-                             PopularityScoreCalculator popularityScoreCalc, MongoTemplate mongoTemplate) {
+                             PopularityScoreCalculator popularityScoreCalc) {
         this.githubRepoRepository = githubRepoRepository;
-        this.popularityScoreCalc = popularityScoreCalc;
-        this.mongoTemplate = mongoTemplate;
-    }
+        this.popularityScoreCalc = popularityScoreCalc;}
 
-    public void createGithubItem(GithubSearchResponse.GithubItem githubSearchItem) {
+    public GithubRepo createGithubItem(GithubSearchResponse.GithubItem githubSearchItem) {
 
         var optionalGithubRepo = githubRepoRepository.findGithubRepoByGithubId(githubSearchItem.id());
         var githubRepo = GithubRepo.builder()
@@ -46,8 +38,7 @@ public class GithubRepoService {
                 .build();
 
         if(optionalGithubRepo.isEmpty()) {
-            githubRepoRepository.save(githubRepo);
-            return;
+            return githubRepoRepository.save(githubRepo);
         }
 
         var existingRepo = optionalGithubRepo.get();
@@ -55,21 +46,22 @@ public class GithubRepoService {
         var isSame = existingRepo.isSame(githubRepo);
         if(!isSame) {
             log.info("A github item already exists");
-            updateGithubItem(existingRepo, githubRepo);
+            return updateGithubItem(existingRepo, githubRepo);
         }
+        return null;
     }
 
-    public void updateGithubItem(GithubRepo existingGithubRepo,
+    public GithubRepo updateGithubItem(GithubRepo existingGithubRepo,
                                  GithubRepo currentGithubRepo) {
         var mergedGithubRepo = existingGithubRepo.merge(currentGithubRepo);
         var score =
                 popularityScoreCalc.calculatePopularityScore(mergedGithubRepo);
         mergedGithubRepo.setPopularityScore(score);
-        githubRepoRepository.save(mergedGithubRepo);
+       return githubRepoRepository.save(mergedGithubRepo);
 
     }
 
-    public Page<GithubRepo> findPopularScore(String language,
+    public Page<GithubRepo> getAllPopularRepos(String language,
                                              Pageable pageable) {
         if(language == null) {
             return githubRepoRepository.findAll(pageable);
