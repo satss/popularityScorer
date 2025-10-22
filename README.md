@@ -10,7 +10,7 @@ few factors like stars, forks and recentlyUpdateAt( aka pushedAt)
 ## Running the application
 * Run `docker-compose up -d` to start the mongodb instance
     * The mongodb instance will be initialized with a demo database and credentials via the `mongodb-init/init.js` script
-* Run `./gradlew bootRun` to start the application
+* Run `mvn spring-boot:run` to start the application
 
 ## Testing the application
 The integration test **[PopularityScorerIntegrationTests.java](src/test/java/com/example/popularityScorer/PopularityScorerIntegrationTests.java))** runs with the help of MongoDB Testcontainers (https://testcontainers.com/).
