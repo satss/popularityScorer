@@ -1,4 +1,4 @@
-# PopularityScorer
+# PopularityScoringService
 The purpose of this application is to fetch repos via github search api and assign popularity score calculated based on 
 few factors like stars, forks and recentlyUpdateAt( aka pushedAt)
 
