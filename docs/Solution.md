@@ -25,3 +25,4 @@ of this module is to pick all repos which has no score assigned and assign score
 ####  Note:
   - Currently, I have also not created a scheduler lock which might be crucial when you have
     pods running, and you want to assign a job to one particular leader
+  - Currently the user is only able to update a score of the github repository

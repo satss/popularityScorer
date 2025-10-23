@@ -16,13 +16,12 @@ public class Scheduler {
         this.popularityScoreCalculator = popularityScoreCalculator;
         this.searchService = searchService;
     }
-//* 5 * * * *
+
     @Scheduled(cron = "* * * * * *", zone = "UTC")
     public void fetchRepositories() {
           searchService.fetchGithubRepos();
     }
 
-    //* /56 * * * *
     @Scheduled(cron = "* * * * * *", zone = "UTC")
     public void assignPopularityScores() {
         popularityScoreCalculator.assignScore();
