@@ -4,7 +4,6 @@ import com.example.popularityScorer.github.score.PopularityScoreCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -14,8 +13,6 @@ import java.util.UUID;
 @ExtendWith(MockitoExtension.class)
 class PopularityScoreCalculatorTest {
 
-    @Mock
-    GithubRepoRepository githubRepoRepository;
 
     @InjectMocks
     PopularityScoreCalculator popularityScoreCalculator;
@@ -60,7 +57,7 @@ class PopularityScoreCalculatorTest {
 
 
     @Test
-    void shouldHaveLessPopularityScoreSinceHasMoreStars() {
+    void shouldHaveLessPopularityScoreSinceHasLessForks() {
 
         GithubRepo andrejKarapathyRepo = GithubRepo.builder()
                 .id(UUID.randomUUID().toString())
@@ -79,7 +76,7 @@ class PopularityScoreCalculatorTest {
         GithubRepo samAltmanRepo = GithubRepo.builder()
                 .id(UUID.randomUUID().toString())
                 .githubUrl("openAiChanges")
-                .stars(350L)
+                .stars(400L)
                 .forks(600L)
                 .language(Language.Python)
                 .repoCreatedAt(LocalDateTime.now().minusDays(8))

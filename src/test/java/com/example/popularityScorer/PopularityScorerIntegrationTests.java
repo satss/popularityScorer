@@ -62,7 +62,7 @@ class PopularityScorerIntegrationTests {
     }
 
     @Test
-    public void shouldBeAbleToFetchGithubRepositor() {
+    public void shouldBeAbleToFetchGithubRepositories() {
         getGithubSearchApiResponse();
         searchService.fetchGithubRepos();
         Assertions.assertTrue(mongoOperations.collectionExists("fetchUntil"));
@@ -71,7 +71,7 @@ class PopularityScorerIntegrationTests {
     }
 
     @Test
-    public void shouldBeAbleToCheckPopularityScoreIsNotNull() throws InterruptedException {
+    public void shouldBeAbleToCheckPopularityScoreHasAssigned() throws InterruptedException {
         getGithubSearchApiResponse();
         searchService.fetchGithubRepos();
         Thread.sleep(1_000);
@@ -87,7 +87,7 @@ class PopularityScorerIntegrationTests {
     }
 
     @Test
-    public void shouldBeAbleToCheckPythonAsLanguageWhenReposExists() throws InterruptedException {
+    public void shouldBeAbleToFetchPythonLanguageRepoWhenExists() throws InterruptedException {
         getGithubSearchApiResponse();
         searchService.fetchGithubRepos();
         Thread.sleep(1_000);
@@ -101,7 +101,7 @@ class PopularityScorerIntegrationTests {
     }
 
     @Test
-    public void noFurtherActionIsRequiredWhenSizeIsEmptyItem() throws InterruptedException {
+    public void noFurtherActionIsRequiredWhenGithubItemIsEmpty() throws InterruptedException {
 
        var githubRepoBeforeInvocation =
                githubRepoService.getAllPopularRepos(null,

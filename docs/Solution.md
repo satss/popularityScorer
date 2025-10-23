@@ -20,9 +20,11 @@ of this module is to pick all repos which has no score assigned and assign score
 ### Choice of Database
   - I decided to go here with nosql database since I am currently dealing with unstructured data
     for evaluation of popularity. Currently, we have only 3 params and in the future might be more 
-    github params adjusted and hence choose mongodb (could have also been elasticsearch )
+    GitHub params adjusted and hence choose mongodb (could have also been elasticsearch )
 
 ####  Note:
   - Currently, I have also not created a scheduler lock which might be crucial when you have
     pods running, and you want to assign a job to one particular leader
-  - Currently the user is only able to update a score of the github repository
+  - Currently, the user is able to update a score of the GitHub repository that he can search via repoCreatedAt and language
+  - For simplicity whenever a GitHub repo fields are updated such as (stars or pushedAt etc) currently we are not re-fetching using search api
+    since it could be cumbersome. 

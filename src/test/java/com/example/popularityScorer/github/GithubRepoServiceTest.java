@@ -53,7 +53,7 @@ class GithubRepoServiceTest {
 
 
     @Test
-    public void shouldIncreaseScoreWhenScoreIndicatorsAreImproved() {
+    public void shouldUpdateScoreWhenScoreIndicatorsAreChanged() {
 
         GithubRepo githubRepo = GithubRepo.builder()
                 .id("1")

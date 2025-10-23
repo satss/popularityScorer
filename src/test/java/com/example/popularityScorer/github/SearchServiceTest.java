@@ -48,7 +48,7 @@ class SearchServiceTest {
     }
 
     @Test
-    public void shouldDoNothingWithNoResponseIsReceived2() {
+    public void shouldCreateGithubRepoWhenNewItemisFetched() {
         when(searchTrackerRepo.findTopByOrderByLastFetchedAtDesc()).thenReturn(Optional.empty());
 
         GithubSearchResponse.GithubItem githubSearchItem = GithubSearchResponse.GithubItem.builder()
